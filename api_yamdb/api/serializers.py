@@ -1,7 +1,30 @@
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
+from rest_framework.validators import (
+    UniqueTogetherValidator, UniqueValidator)
 
 from reviews.models import Comment, Review
+from users.models import User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        validators=(
+            UniqueValidator(
+                queryset=User.objects.all(),
+                message='A user with that email already exists.'
+            ),
+        )
+    )
+
+    class Meta:
+        model = User
+        fields = ('email', 'username')
+
+    def validate_username(self, value):
+        if value == 'me':
+            raise serializers.ValidationError('Username cannot be equal "me".')
+        return value
 
 
 class ReviewSerializer(serializers.ModelSerializer):
