@@ -23,21 +23,20 @@ class AuthViewSet(viewsets.ViewSet):
         if (not request.data.get('username')
                 or not request.data.get('confirmation_code')):
             return Response(
-                {'message': 'Username and confirmation_code  are required.'},
+                {'message': 'Username and confirmation_code are required.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        user = User.objects.filter(**request.data).first()
+        user = User.objects.filter(username=request.data['username']).first()
         if not user:
             return Response(
-                {'message': 'Invalid post data.'},
-                status=status.HTTP_400_BAD_REQUEST
+                {'message': 'User not found.'},
+                status=status.HTTP_404_NOT_FOUND,
             )
-
         confirmation_code = request.data.get('confirmation_code')
         if (not user or user.confirmation_code != int(confirmation_code)):
             return Response(
-                {'message': 'Invalid post data.'},
-                status=status.HTTP_400_BAD_REQUEST
+                {'message': 'Invalid confirmation_code.'},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         return Response(
             {'token': str(RefreshToken.for_user(user).access_token)},
@@ -62,7 +61,7 @@ class AuthViewSet(viewsets.ViewSet):
             if not serializer.is_valid():
                 return Response(
                     serializer.errors,
-                    status=status.HTTP_400_BAD_REQUEST
+                    status=status.HTTP_400_BAD_REQUEST,
                 )
             user = serializer.save()
         serializer = UserSerializer(user)
@@ -78,5 +77,5 @@ class AuthViewSet(viewsets.ViewSet):
         )
         return Response(
             serializer.data,
-            status=status.HTTP_200_OK
+            status=status.HTTP_200_OK,
         )
