@@ -13,47 +13,47 @@ from users.models import User
 class AuthViewSet(viewsets.ViewSet):
     permission_classes = (permissions.AllowAny,)
 
-    @action(detail=False, methods=("post",))
+    @action(detail=False, methods=('post',))
     def token(self, request):
         if not request.data:
             return Response(
-                {"message": "The body cannot be empty."},
+                {'message': 'The body cannot be empty.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if (not request.data.get("username")
-                or not request.data.get("confirmation_code")):
+        if (not request.data.get('username')
+                or not request.data.get('confirmation_code')):
             return Response(
-                {"message": "Username and confirmation_code  are required."},
+                {'message': 'Username and confirmation_code  are required.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         user = User.objects.filter(**request.data).first()
         if not user:
             return Response(
-                {"message": "Invalid post data."},
+                {'message': 'Invalid post data.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        confirmation_code = request.data.get("confirmation_code")
+        confirmation_code = request.data.get('confirmation_code')
         if (not user or user.confirmation_code != int(confirmation_code)):
             return Response(
-                {"message": "Invalid post data."},
+                {'message': 'Invalid post data.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         return Response(
-            {"token": str(RefreshToken.for_user(user).access_token)},
+            {'token': str(RefreshToken.for_user(user).access_token)},
             status=status.HTTP_200_OK,
         )
 
-    @action(detail=False, methods=("post",))
+    @action(detail=False, methods=('post',))
     def signup(self, request):
         if not request.data:
             return Response(
-                {"message": "The body cannot be empty."},
+                {'message': 'The body cannot be empty.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if not request.data.get("email") or not request.data.get("username"):
+        if not request.data.get('email') or not request.data.get('username'):
             return Response(
-                {"message": "Email and username are required."},
+                {'message': 'Email and username are required.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         user = User.objects.filter(**request.data).first()
@@ -70,10 +70,10 @@ class AuthViewSet(viewsets.ViewSet):
         user.confirmation_code = confirmation_code
         user.save()
         send_mail(
-            "Код подтверждения",
-            f"Ваш код подтверждения: {confirmation_code}.",
-            "auth@yamdb.com",
-            [request.data.get("email")],
+            'Код подтверждения',
+            f'Ваш код подтверждения: {confirmation_code}.',
+            'auth@yamdb.com',
+            [request.data.get('email')],
             fail_silently=False,
         )
         return Response(
