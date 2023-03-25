@@ -11,7 +11,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = (permissions.AllowAny,) # пока поставил этот пермишн
 
-    def object(self):
+    def get_object(self):
         """Возвращает title по pk."""
         return get_object_or_404(Title, pk=self.kwargs.get("title_id"))
 
@@ -30,7 +30,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = (permissions.AllowAny,) # пока поставил этот пермишн
 
-    def object(self):
+    def get_object(self):
         """Возвращает review по pk."""
         return get_object_or_404(Review, pk=self.kwargs.get("review_id"))
 
