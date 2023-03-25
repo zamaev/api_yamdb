@@ -17,12 +17,12 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Возвращает queryset c review для выбранного title."""
-        return self.object().reviews.all()
+        return self.get_object().reviews.all()
 
     def perform_create(self, serializer):
         """Создает review для текущего title,
         автор == текущий пользователь."""
-        serializer.save(author=self.request.user, title=self.object())
+        serializer.save(author=self.request.user, title=self.get_object())
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -36,11 +36,11 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Возвращает queryset c comments для выбранного review."""
-        return self.object.comments.all()
+        return self.get_object.comments.all()
 
     def perform_create(self, serializer):
         """Создает comments для текущего review,
         автор == текущий пользователь."""
-        serializer.save(author=self.request.user, review=self.object())
+        serializer.save(author=self.request.user, review=self.get_object())
 
         # есть у меня сомнения по поводу перформ-креэйт, сделал пока как в предыдущем задании
