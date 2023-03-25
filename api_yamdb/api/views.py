@@ -79,3 +79,10 @@ class AuthViewSet(viewsets.ViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get_object(self):
+        username = self.kwargs.get('pk')
+        if username == 'me':
+            return get_object_or_404(User,
+                                     username=self.request.user.username)
+        return get_object_or_404(User, username=username)
