@@ -6,11 +6,17 @@ class Category(models.Model):
                             max_length=256)
     slug = models.SlugField(unique=True, max_length=50)
 
+    def __str__(self):
+        return self.name
+
 
 class Genre(models.Model):
     name = models.CharField(verbose_name='Genre name',
                             max_length=256)
     slug = models.SlugField(unique=True, max_length=50)
+
+    def __str__(self):
+        return self.name
 
 
 class GenreTitle(models.Model):
@@ -26,6 +32,9 @@ class GenreTitle(models.Model):
         on_delete=models.SET_NULL
     )
 
+    def __str__(self):
+        return self.genre
+
 
 class Title(models.Model):
     name = models.CharField(verbose_name='Title',
@@ -34,6 +43,7 @@ class Title(models.Model):
     description = models.TextField(verbose_name='Description', blank=True)
     category = models.ForeignKey(
         Category,
+        verbose_name='category',
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
@@ -43,3 +53,6 @@ class Title(models.Model):
         Genre,
         through=GenreTitle
     )
+
+    def __str__(self):
+        return self.name
