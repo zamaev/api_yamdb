@@ -51,7 +51,7 @@ class UserSerializer(serializers.ModelSerializer):
             ),
         ),
     )
-    role = RoleChoiceField(choices=ROLE_CHOICES)
+    role = RoleChoiceField(choices=ROLE_CHOICES, required=False)
 
     class Meta:
         model = User
