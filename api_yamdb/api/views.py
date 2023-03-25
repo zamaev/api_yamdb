@@ -2,11 +2,12 @@ import random
 
 from django.core.mail import send_mail
 from rest_framework import permissions, status, viewsets
+from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from api.serializers import UserSerializer
+from api.serializers import AuthSerializer, UserSerializer
 from users.models import User
 
 
@@ -20,17 +21,11 @@ class AuthViewSet(viewsets.ViewSet):
                 {'message': 'The body cannot be empty.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if (not request.data.get('username')
-                or not request.data.get('confirmation_code')):
+        user = get_object_or_404(User, username=request.data['username'])
+        if not request.data.get('confirmation_code'):
             return Response(
-                {'message': 'Username and confirmation_code are required.'},
+                {'message': 'Confirmation_code are required.'},
                 status=status.HTTP_400_BAD_REQUEST,
-            )
-        user = User.objects.filter(username=request.data['username']).first()
-        if not user:
-            return Response(
-                {'message': 'User not found.'},
-                status=status.HTTP_404_NOT_FOUND,
             )
         confirmation_code = request.data.get('confirmation_code')
         if (not user or user.confirmation_code != int(confirmation_code)):
@@ -57,14 +52,14 @@ class AuthViewSet(viewsets.ViewSet):
             )
         user = User.objects.filter(**request.data).first()
         if not user:
-            serializer = UserSerializer(data=request.data)
+            serializer = AuthSerializer(data=request.data)
             if not serializer.is_valid():
                 return Response(
                     serializer.errors,
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             user = serializer.save()
-        serializer = UserSerializer(user)
+        serializer = AuthSerializer(user)
         confirmation_code = random.randint(1111, 9999)
         user.confirmation_code = confirmation_code
         user.save()
@@ -79,3 +74,8 @@ class AuthViewSet(viewsets.ViewSet):
             serializer.data,
             status=status.HTTP_200_OK,
         )
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
