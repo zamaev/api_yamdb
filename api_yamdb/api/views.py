@@ -1,6 +1,5 @@
 import random
 
-from django.core.mail import send_mail
 from rest_framework import permissions, status, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
@@ -63,12 +62,9 @@ class AuthViewSet(viewsets.ViewSet):
         confirmation_code = random.randint(1111, 9999)
         user.confirmation_code = confirmation_code
         user.save()
-        send_mail(
+        user.email_user(
             'Код подтверждения',
             f'Ваш код подтверждения: {confirmation_code}.',
-            'auth@yamdb.com',
-            [request.data.get('email')],
-            fail_silently=False,
         )
         return Response(
             serializer.data,
