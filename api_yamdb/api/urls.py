@@ -6,7 +6,14 @@ from .views import (CommentViewSet, ReviewViewSet,)
 
 app_name = 'api'
 
+from api.views import AuthViewSet, UserViewSet
+
+
+app_name = 'api'
+
 router = DefaultRouter()
+router.register(r'auth', AuthViewSet, basename='auth')
+router.register(r'users', UserViewSet)
 
 router.register(r'categories', CategoryViewSet)
 router.register(r'genres', GenreViewSet)
