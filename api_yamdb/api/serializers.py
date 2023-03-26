@@ -27,13 +27,13 @@ class RoleChoiceField(serializers.ChoiceField):
         for key, role in ROLE_CHOICES:
             if key == data:
                 return role
-        raise serializers.ValidationError(f'Role \'{data}\' is not support')
+        raise serializers.ValidationError(f'Role \'{data}\' is not supported')
 
     def to_internal_value(self, data):
         for key, role in ROLE_CHOICES:
             if role == data:
                 return key
-        raise serializers.ValidationError('Role is not support')
+        raise serializers.ValidationError('Role is not supported')
 
 
 class UserSerializer(serializers.ModelSerializer):
