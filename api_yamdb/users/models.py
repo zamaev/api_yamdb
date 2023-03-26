@@ -6,8 +6,8 @@ from django.db import models
 
 ROLE_CHOICES = (
     ('user', 'user'),
-    ('user', 'moderator'),
-    ('user', 'admin'),
+    ('moderator', 'moderator'),
+    ('admin', 'admin'),
 )
 
 
