@@ -6,7 +6,7 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
 
 from api.mixins import CreateListDestroyViewSet
 from api.permissions import isAdmin, isOwner
@@ -18,6 +18,7 @@ from api.serializers import (
     ReviewSerializer,
     TitleSerializer,
     TitleSerializerGET,
+    TokenSerializer,
     UserSerializer,
 )
 from reviews.models import Review, Title, Category, Genre
@@ -29,17 +30,13 @@ class AuthViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=('post',))
     def token(self, request):
-        if not request.data:
+        serializer = TokenSerializer(data=request.data)
+        if not serializer.is_valid():
             return Response(
-                {'message': 'The body cannot be empty.'},
-                status=status.HTTP_400_BAD_REQUEST,
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
             )
-        user = get_object_or_404(User, username=request.data['username'])
-        if not request.data.get('confirmation_code'):
-            return Response(
-                {'message': 'Confirmation_code are required.'},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        user = get_object_or_404(User, username=request.data.get('username'))
         confirmation_code = request.data.get('confirmation_code')
         if (not user or user.confirmation_code != int(confirmation_code)):
             return Response(
@@ -47,38 +44,32 @@ class AuthViewSet(viewsets.ViewSet):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         return Response(
-            {'token': str(RefreshToken.for_user(user).access_token)},
+            {'token': str(AccessToken.for_user(user))},
             status=status.HTTP_200_OK,
         )
 
     @action(detail=False, methods=('post',))
     def signup(self, request):
-        if not request.data:
+        user = None
+        if request.data.get('username') and request.data.get('email'):
+            user = User.objects.filter(
+                username=request.data.get('username'),
+                email=request.data.get('email'),
+            ).first()
+        serializer = AuthSerializer(user, data=request.data)
+        if not serializer.is_valid():
             return Response(
-                {'message': 'The body cannot be empty.'},
+                serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if not request.data.get('email') or not request.data.get('username'):
-            return Response(
-                {'message': 'Email and username are required.'},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        user = User.objects.filter(**request.data).first()
         if not user:
-            serializer = AuthSerializer(data=request.data)
-            if not serializer.is_valid():
-                return Response(
-                    serializer.errors,
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
             user = serializer.save()
-        serializer = AuthSerializer(user)
         confirmation_code = random.randint(1111, 9999)
         user.confirmation_code = confirmation_code
         user.save()
         user.email_user(
             'Код подтверждения',
-            f'Ваш код подтверждения: {confirmation_code}.',
+            f'{confirmation_code}',
         )
         return Response(
             serializer.data,
@@ -98,6 +89,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return get_object_or_404(User, username=username)
 
     def get_permissions(self):
+        print(self.request.user.role)
         if self.action == 'retrieve' or self.action == 'partial_update':
             return (isOwner(),)
         return super().get_permissions()

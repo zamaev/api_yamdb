@@ -5,9 +5,9 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 ROLE_CHOICES = (
-    ('U', 'user'),
-    ('M', 'moderator'),
-    ('A', 'admin'),
+    ('user', 'user'),
+    ('user', 'moderator'),
+    ('user', 'admin'),
 )
 
 
@@ -37,7 +37,7 @@ class User(AbstractUser):
     )
     role = models.CharField(
         'Роль',
-        max_length=1,
+        max_length=30,
         choices=ROLE_CHOICES,
         default='U',
     )
