@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import (
     UniqueTogetherValidator, UniqueValidator)
 
-from reviews.models import Comment, Review
+from reviews.models import Comment, Review, Category, Genre, Title
 from users.models import User, ROLE_CHOICES
 
 
@@ -27,13 +27,13 @@ class RoleChoiceField(serializers.ChoiceField):
         for key, role in ROLE_CHOICES:
             if key == data:
                 return role
-        raise serializers.ValidationError(f'Role \'{data}\' is not support')
+        raise serializers.ValidationError(f'Role \'{data}\' is not supported')
 
     def to_internal_value(self, data):
         for key, role in ROLE_CHOICES:
             if role == data:
                 return key
-        raise serializers.ValidationError('Role is not support')
+        raise serializers.ValidationError('Role is not supported')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -52,6 +52,45 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'email', 'first_name',
                   'last_name', 'bio', 'role')
+
+
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = ('name', 'slug')
+        model = Category
+
+
+class GenreSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = ('name', 'slug')
+        model = Genre
+
+
+class TitleSerializerGET(serializers.ModelSerializer):
+    genre = GenreSerializer(many=True)
+    category = CategorySerializer()
+
+    class Meta:
+        model = Title
+        fields = ('name', 'year', 'description', 'genre', 'category')
+
+
+class TitleSerializer(serializers.ModelSerializer):
+    genre = serializers.SlugRelatedField(
+        slug_field='slug',
+        queryset=Genre.objects.all(),
+        many=True
+    )
+    category = serializers.SlugRelatedField(
+        slug_field='slug',
+        queryset=Category.objects.all()
+    )
+
+    class Meta:
+        model = Title
+        fields = ('name', 'year', 'description', 'genre', 'category')
 
 
 class ReviewSerializer(serializers.ModelSerializer):
