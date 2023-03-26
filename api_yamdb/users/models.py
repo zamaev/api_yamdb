@@ -54,3 +54,10 @@ class User(AbstractUser):
                 name='unique_email',
             ),
         )
+
+    def save(self, *args, **kwargs):
+        if self.is_superuser:
+            self.role = 'A'
+        if self.role == 'A':
+            self.is_staff = True
+        super().save(*args, **kwargs)

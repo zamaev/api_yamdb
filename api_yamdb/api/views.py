@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api.mixins import CreateListDestroyViewSet
+from api.permissions import isAdmin, isOwner
 from api.serializers import (
     AuthSerializer,
     CategorySerializer,
@@ -88,12 +89,18 @@ class AuthViewSet(viewsets.ViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (isAdmin,)
 
     def get_object(self):
         username = self.kwargs.get('pk')
         if username == 'me':
             username = self.request.user.username
         return get_object_or_404(User, username=username)
+
+    def get_permissions(self):
+        if self.action == 'retrieve' or self.action == 'partial_update':
+            return (isOwner(),)
+        return super().get_permissions()
 
 
 class CategoryViewSet(CreateListDestroyViewSet):
