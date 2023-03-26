@@ -6,9 +6,15 @@ from reviews.models import Comment, Review, Category, Genre, Title
 from users.models import User, ROLE_CHOICES
 
 
+class TokenSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    confirmation_code = serializers.IntegerField(required=True)
+
+
 class AuthSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
+        max_length=254,
         validators=(
             UniqueValidator(
                 queryset=User.objects.all(),
@@ -22,23 +28,10 @@ class AuthSerializer(serializers.ModelSerializer):
         fields = ('email', 'username')
 
 
-class RoleChoiceField(serializers.ChoiceField):
-    def to_representation(self, data):
-        for key, role in ROLE_CHOICES:
-            if key == data:
-                return role
-        raise serializers.ValidationError(f'Role \'{data}\' is not supported')
-
-    def to_internal_value(self, data):
-        for key, role in ROLE_CHOICES:
-            if role == data:
-                return key
-        raise serializers.ValidationError('Role is not supported')
-
-
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
+        max_length=254,
         validators=(
             UniqueValidator(
                 queryset=User.objects.all(),
@@ -46,7 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
             ),
         ),
     )
-    role = RoleChoiceField(choices=ROLE_CHOICES, required=False)
+    role = serializers.ChoiceField(choices=ROLE_CHOICES, required=False)
 
     class Meta:
         model = User
