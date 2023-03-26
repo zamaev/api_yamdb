@@ -75,6 +75,11 @@ class Title(models.Model):
         Genre,
         through=GenreTitle
     )
+    rating = models.IntegerField(
+        verbose_name='Рейтинг',
+        null=True,
+        default=None
+    )
 
     class Meta:
         verbose_name = 'Title'
