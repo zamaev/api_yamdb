@@ -9,8 +9,81 @@ from django.db import models
 User = get_user_model()
 
 
+class Category(models.Model):
+    """Categories."""
+    name = models.CharField(verbose_name='Category name',
+                            max_length=256)
+    slug = models.SlugField(unique=True, max_length=50)
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
+    def __str__(self):
+        return self.name
+
+
+class Genre(models.Model):
+    """Genre"""
+    name = models.CharField(verbose_name='Genre name',
+                            max_length=256)
+    slug = models.SlugField(unique=True, max_length=50)
+
+    class Meta:
+        verbose_name = 'Genre'
+        verbose_name_plural = 'Genres'
+
+    def __str__(self):
+        return self.name
+
+
+class GenreTitle(models.Model):
+    """Genre of Title"""
+    genre = models.ForeignKey(
+        Genre,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    title = models.ForeignKey(
+        'Title',
+        null=True,
+        on_delete=models.SET_NULL
+    )
+
+    class Meta:
+        verbose_name = 'GenreTitle'
+        verbose_name_plural = 'GenreTitles'
+
+    def __str__(self):
+        return f'{self.genre} {self.title}'
+
+
 class Title(models.Model):
-    ...
+    """Title"""
+    name = models.CharField(verbose_name='Title',
+                            max_length=256)
+    year = models.IntegerField(verbose_name='Title year')
+    description = models.TextField(verbose_name='Description', blank=True)
+    category = models.ForeignKey(
+        Category,
+        verbose_name='category',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='titles'
+    )
+    genre = models.ManyToManyField(
+        Genre,
+        through=GenreTitle
+    )
+
+    class Meta:
+        verbose_name = 'Title'
+        verbose_name_plural = 'Titles'
+
+    def __str__(self):
+        return self.name
 
 
 class Review(models.Model):
