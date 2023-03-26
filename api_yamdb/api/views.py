@@ -1,15 +1,48 @@
 from rest_framework import permissions, viewsets
 from rest_framework.generics import get_object_or_404
 
-from reviews.models import Review, Title
+from reviews.models import Review, Title, Category, Genre
 from .serializers import (CommentSerializer,
                           ReviewSerializer,)
+
+from .mixins import CreateListDestroyViewSet
+from .serializers import (
+    CategorySerializer,
+    TitleSerializer,
+    GenreSerializer,
+    TitleSerializerGET
+)
+
+
+class CategoryViewSet(CreateListDestroyViewSet):
+    """Вьюсет для обьектов модели Category."""
+
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class TitleViewSet(viewsets.ModelViewSet):
+    """Вьюсет для обьектов модели Title."""
+
+    queryset = Title.objects.all()
+
+    def get_serializer_class(self):
+        """Обрабатывает запрос GET чере TitleSerializerGET."""
+        if self.request.method == 'GET':
+            return TitleSerializerGET
+        return TitleSerializer
+
+
+class GenreViewSet(CreateListDestroyViewSet):
+    """Вьюсет для обьектов модели Genre."""
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели Review."""
     serializer_class = ReviewSerializer
-    permission_classes = (permissions.AllowAny,) # пока поставил этот пермишн
+    permission_classes = (permissions.AllowAny,)  # пока поставил этот пермишн
 
     def get_object(self):
         """Возвращает title по pk."""
@@ -28,7 +61,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели Comment."""
     serializer_class = CommentSerializer
-    permission_classes = (permissions.AllowAny,) # пока поставил этот пермишн
+    permission_classes = (permissions.AllowAny,)  # пока поставил этот пермишн
 
     def get_object(self):
         """Возвращает review по pk."""
@@ -43,4 +76,5 @@ class CommentViewSet(viewsets.ModelViewSet):
         автор == текущий пользователь."""
         serializer.save(author=self.request.user, review=self.get_object())
 
-        # есть у меня сомнения по поводу перформ-креэйт, сделал пока как в предыдущем задании
+        # есть у меня сомнения по поводу перформ-креэйт,
+        # сделал пока как в предыдущем задании
