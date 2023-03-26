@@ -20,12 +20,16 @@ class User(AbstractUser):
     username = models.CharField(
         'username',
         max_length=150,
-        blank=True,
         unique=True,
+        help_text=('Required. 150 characters or fewer. '
+                   'Letters, digits and @/./+/-/_ only.'),
         validators=(
             UnicodeUsernameValidator(),
             username_is_not_me_validators,
-        )
+        ),
+        error_messages={
+            'unique': 'A user with that username already exists.',
+        },
     )
     bio = models.TextField(
         'Биография',
