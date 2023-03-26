@@ -1,5 +1,7 @@
 import random
 
+from django.db.models import Avg
+
 from rest_framework import permissions, status, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.decorators import action
@@ -111,7 +113,9 @@ class CategoryViewSet(CreateListDestroyViewSet):
 class TitleViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели Title."""
 
-    queryset = Title.objects.all()
+    queryset = Title.objects.all().annotate(
+        Avg("reviews__score")
+    )
 
     def get_serializer_class(self):
         """Обрабатывает запрос GET чере TitleSerializerGET."""
