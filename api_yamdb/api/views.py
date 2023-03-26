@@ -95,12 +95,11 @@ class UserViewSet(viewsets.ModelViewSet):
             username = self.request.user.username
         return get_object_or_404(User, username=username)
 
-<<<<<<< HEAD
     def get_permissions(self):
         if self.action == 'retrieve' or self.action == 'partial_update':
             return (isOwner(),)
         return super().get_permissions()
-=======
+
 
 class CategoryViewSet(CreateListDestroyViewSet):
     """Вьюсет для обьектов модели Category."""
@@ -166,4 +165,3 @@ class CommentViewSet(viewsets.ModelViewSet):
 
         # есть у меня сомнения по поводу перформ-креэйт,
         # сделал пока как в предыдущем задании
->>>>>>> develop
