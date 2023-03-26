@@ -21,11 +21,6 @@ class AuthSerializer(serializers.ModelSerializer):
         model = User
         fields = ('email', 'username')
 
-    def validate_username(self, value):
-        if value == 'me':
-            raise serializers.ValidationError('Username cannot be equal "me".')
-        return value
-
 
 class RoleChoiceField(serializers.ChoiceField):
     def to_representation(self, data):
