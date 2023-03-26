@@ -83,6 +83,5 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_object(self):
         username = self.kwargs.get('pk')
         if username == 'me':
-            return get_object_or_404(User,
-                                     username=self.request.user.username)
+            username = self.request.user.username
         return get_object_or_404(User, username=username)
