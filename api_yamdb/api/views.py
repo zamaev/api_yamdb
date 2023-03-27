@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
 from api.mixins import CreateListDestroyViewSet
-from api.permissions import isAdmin, isOwner, isOwnerModeratorAdmin
+from api.permissions import isAdmin, IsAdminOrReadOnly, isOwner, isOwnerModeratorAdmin
 from api.serializers import (
     AuthSerializer,
     CategorySerializer,
@@ -100,17 +100,20 @@ class CategoryViewSet(CreateListDestroyViewSet):
 
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = (IsAdminOrReadOnly,)
 
 
 class TitleViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели Title."""
 
+    permission_classes = (IsAdminOrReadOnly,)
     queryset = Title.objects.all().annotate(
         Avg("reviews__score")
     )
 
     def get_serializer_class(self):
-        """Обрабатывает запрос GET чере TitleSerializerGET."""
+        """Использует один из сериалайзеров в зависимости от запроса."""
+    
         if self.request.method == 'GET':
             return TitleSerializerGET
         return TitleSerializer
@@ -118,8 +121,10 @@ class TitleViewSet(viewsets.ModelViewSet):
 
 class GenreViewSet(CreateListDestroyViewSet):
     """Вьюсет для обьектов модели Genre."""
+
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+    permission_classes = (IsAdminOrReadOnly,)
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
