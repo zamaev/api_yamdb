@@ -1,7 +1,7 @@
 import random
 
 from django.db.models import Avg
-
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
@@ -127,6 +127,8 @@ class CategoryViewSet(CreateListDestroyViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (IsAdminOrReadOnly,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
 
 
 class TitleViewSet(viewsets.ModelViewSet):
@@ -136,6 +138,29 @@ class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all().annotate(
         Avg("reviews__score")
     )
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('genre',)
+
+    def get_filterset_kwargs(self):
+        return {
+            'genre': Genre.objects.filter(slug=self.request.GET.get('genre')).first(),
+        }
+
+    # def get_genre(self):
+    #     genre_slug = self.request.GET.get('genre')
+    #     return Genre.objects.filter(slug=genre_slug).first()
+
+    # def get_category(self):
+    #     category_slug = self.request.GET.get('category')
+    #     return Category.objects.filter(slug=category_slug).first()
+
+    # def get_queryset(self):
+    #     queryset = self.queryset
+    #     if self.get_genre():
+    #         queryset = queryset.filter(genre=self.get_genre())
+    #     if self.get_category():
+    #         queryset = queryset.filter(category=self.get_category())
+    #     return queryset
 
     def get_serializer_class(self):
         """Использует один из сериалайзеров в зависимости от запроса."""
@@ -151,6 +176,8 @@ class GenreViewSet(CreateListDestroyViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = (IsAdminOrReadOnly,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
