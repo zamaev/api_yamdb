@@ -2,9 +2,10 @@ import random
 
 from django.db.models import Avg
 
-from rest_framework import permissions, status, viewsets
-from rest_framework.generics import get_object_or_404
+from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
@@ -25,6 +26,7 @@ from api.serializers import (
     TitleSerializerGET,
     TokenSerializer,
     UserSerializer,
+    UserPatchSerializator,
 )
 from reviews.models import Review, Title, Category, Genre
 from users.models import User
@@ -84,8 +86,9 @@ class AuthViewSet(viewsets.ViewSet):
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = (isAdmin,)
+    pagination_class = PageNumberPagination
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('username',)
 
     def get_object(self):
         username = self.kwargs.get('pk')
@@ -93,10 +96,29 @@ class UserViewSet(viewsets.ModelViewSet):
             username = self.request.user.username
         return get_object_or_404(User, username=username)
 
+    def get_serializer_class(self):
+        if (self.kwargs.get('pk') == 'me'
+                and self.action == 'partial_update'):
+            return UserPatchSerializator
+        return UserSerializer
+
     def get_permissions(self):
-        if self.action == 'retrieve' or self.action == 'partial_update':
+        if (self.kwargs.get('pk') == 'me'
+            and (self.action == 'retrieve'
+                 or self.action == 'partial_update'
+                 or self.action == 'destroy')):
             return (isOwner(),)
-        return super().get_permissions()
+        return (isAdmin(),)
+
+    def destroy(self, request, pk=None):
+        if self.kwargs.get('pk') == 'me':
+            return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        return super().destroy(request, pk)
+
+    def update(self, request, *args, **kwargs):
+        if self.action == 'update':
+            return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        return super().update(request, args, **kwargs)
 
 
 class CategoryViewSet(CreateListDestroyViewSet):

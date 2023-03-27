@@ -47,6 +47,11 @@ class UserSerializer(serializers.ModelSerializer):
                   'last_name', 'bio', 'role')
 
 
+class UserPatchSerializator(UserSerializer):
+    role = serializers.ChoiceField(choices=ROLE_CHOICES,
+                                   read_only=True)
+
+
 class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
