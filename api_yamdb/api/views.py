@@ -139,28 +139,23 @@ class TitleViewSet(viewsets.ModelViewSet):
         Avg("reviews__score")
     )
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('genre',)
+    filterset_fields = ('name', 'year',)
 
-    def get_filterset_kwargs(self):
-        return {
-            'genre': Genre.objects.filter(slug=self.request.GET.get('genre')).first(),
-        }
+    def get_genre(self):
+        genre_slug = self.request.GET.get('genre')
+        return Genre.objects.filter(slug=genre_slug).first()
 
-    # def get_genre(self):
-    #     genre_slug = self.request.GET.get('genre')
-    #     return Genre.objects.filter(slug=genre_slug).first()
+    def get_category(self):
+        category_slug = self.request.GET.get('category')
+        return Category.objects.filter(slug=category_slug).first()
 
-    # def get_category(self):
-    #     category_slug = self.request.GET.get('category')
-    #     return Category.objects.filter(slug=category_slug).first()
-
-    # def get_queryset(self):
-    #     queryset = self.queryset
-    #     if self.get_genre():
-    #         queryset = queryset.filter(genre=self.get_genre())
-    #     if self.get_category():
-    #         queryset = queryset.filter(category=self.get_category())
-    #     return queryset
+    def get_queryset(self):
+        queryset = self.queryset
+        if self.get_genre():
+            queryset = queryset.filter(genre=self.get_genre())
+        if self.get_category():
+            queryset = queryset.filter(category=self.get_category())
+        return queryset
 
     def get_serializer_class(self):
         """Использует один из сериалайзеров в зависимости от запроса."""
