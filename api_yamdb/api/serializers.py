@@ -70,7 +70,8 @@ class TitleSerializerGET(serializers.ModelSerializer):
 
     class Meta:
         model = Title
-        fields = ('name', 'year', 'rating', 'description', 'genre', 'category')
+        fields = ('id', 'name', 'year', 'rating', 'description', 'genre',
+                  'category')
 
 
 class TitleSerializer(serializers.ModelSerializer):
@@ -86,7 +87,7 @@ class TitleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Title
-        fields = ('name', 'year', 'description', 'genre', 'category')
+        fields = ('name', 'id', 'year', 'description', 'genre', 'category')
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -102,7 +103,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'author', 'text', 'score', 'pub_date',)
+        fields = ('id', 'title', 'author', 'text', 'score', 'pub_date',)
         validators = [
             UniqueTogetherValidator(
                 queryset=Review.objects.all(),

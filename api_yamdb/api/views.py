@@ -129,7 +129,10 @@ class GenreViewSet(CreateListDestroyViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели Review."""
     serializer_class = ReviewSerializer
-    permission_classes = (permissions.AllowAny,)  # пока поставил этот пермишн
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        isOwnerModeratorAdmin
+    )
 
     def get_object(self):
         """Возвращает title по pk."""
@@ -148,7 +151,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели Comment."""
     serializer_class = CommentSerializer
-    permission_classes = (permissions.AllowAny,)  # пока поставил этот пермишн
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        isOwnerModeratorAdmin
+    )
 
     def get_object(self):
         """Возвращает review по pk."""
