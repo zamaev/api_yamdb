@@ -89,7 +89,6 @@ class UserViewSet(viewsets.ModelViewSet):
         return get_object_or_404(User, username=username)
 
     def get_permissions(self):
-        print(self.request.user.role)
         if self.action == 'retrieve' or self.action == 'partial_update':
             return (isOwner(),)
         return super().get_permissions()
@@ -113,7 +112,7 @@ class TitleViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         """Использует один из сериалайзеров в зависимости от запроса."""
-    
+
         if self.request.method == 'GET':
             return TitleSerializerGET
         return TitleSerializer
