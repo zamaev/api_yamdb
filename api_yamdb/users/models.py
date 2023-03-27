@@ -39,7 +39,7 @@ class User(AbstractUser):
         'Роль',
         max_length=30,
         choices=ROLE_CHOICES,
-        default='U',
+        default='user',
     )
     confirmation_code = models.IntegerField(
         'Код подтверждения',
@@ -57,7 +57,7 @@ class User(AbstractUser):
 
     def save(self, *args, **kwargs):
         if self.is_superuser:
-            self.role = 'A'
-        if self.role == 'A':
+            self.role = 'admin'
+        if self.role == 'admin':
             self.is_staff = True
         super().save(*args, **kwargs)
