@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
 from api.mixins import CreateListDestroyViewSet
-from api.permissions import isAdmin, isOwner, IsAdminOrReadOnly
+from api.permissions import isAdmin, IsAdminOrReadOnly, isOwner, isOwnerModeratorAdmin
 from api.serializers import (
     AuthSerializer,
     CategorySerializer,
