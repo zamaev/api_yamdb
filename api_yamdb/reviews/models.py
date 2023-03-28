@@ -1,14 +1,12 @@
-from django.core.validators import (
-    MaxValueValidator,
-    MinValueValidator,
-)
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from users.models import User
 
 
 class Category(models.Model):
-    """Categories."""
+    """Категории."""
+
     name = models.CharField(verbose_name='Category name',
                             max_length=256)
     slug = models.SlugField(unique=True, max_length=50)
@@ -23,7 +21,8 @@ class Category(models.Model):
 
 
 class Genre(models.Model):
-    """Genre"""
+    """Жанры."""
+
     name = models.CharField(verbose_name='Genre name',
                             max_length=256)
     slug = models.SlugField(unique=True, max_length=50)
@@ -38,7 +37,8 @@ class Genre(models.Model):
 
 
 class GenreTitle(models.Model):
-    """Genre of Title"""
+    """Жанры произведений."""
+
     genre = models.ForeignKey(
         Genre,
         blank=True,
@@ -61,7 +61,8 @@ class GenreTitle(models.Model):
 
 
 class Title(models.Model):
-    """Title"""
+    """Произведения."""
+
     name = models.CharField(verbose_name='Title',
                             max_length=256)
     year = models.IntegerField(verbose_name='Title year')
@@ -125,8 +126,8 @@ class Review(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Отзыв'
-        verbose_name_plural = 'Отзывы'
+        verbose_name = 'Review'
+        verbose_name_plural = 'Reviews'
         ordering = ['pub_date']
         constraints = (
             models.UniqueConstraint(
@@ -141,6 +142,7 @@ class Review(models.Model):
 
 class Comment(models.Model):
     """Комментарии."""
+
     text = models.TextField(
         verbose_name='Текст',
     )
@@ -163,8 +165,8 @@ class Comment(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
         ordering = ['pub_date']
 
     def __str__(self):
