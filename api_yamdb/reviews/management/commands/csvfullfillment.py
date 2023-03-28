@@ -1,17 +1,22 @@
 import csv
-from django.core.management.base import BaseCommand
 
-from reviews.models import Category, Genre, Title, GenreTitle
+from django.core.management.base import BaseCommand
+from reviews.models import Category, Comment, Genre, GenreTitle, Review, Title
+from users.models import User
 
 CSV_FILES = {
+    'users.csv': User,
     'category.csv': Category,
     'genre.csv': Genre,
     'titles.csv': Title,
-    'genre_title.csv': GenreTitle
+    'genre_title.csv': GenreTitle,
+    'review.csv': Review,
+    'comments.csv': Comment,
 }
 
 ID_FIELDS = {
     'category': Category,
+    'author': User,
 }
 
 

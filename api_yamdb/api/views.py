@@ -2,7 +2,6 @@ import random
 
 from django.db.models import Avg
 from django_filters.rest_framework import DjangoFilterBackend
-
 from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
@@ -10,35 +9,27 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
-from api.mixins import CreateListDestroyViewSet
-from api.permissions import (
-    isAdmin,
-    IsAdminOrReadOnly,
-    isOwner,
-    IsAnyRoleOrReadOnly,
-)
-from api.serializers import (
-    AuthSerializer,
-    CategorySerializer,
-    CommentSerializer,
-    GenreSerializer,
-    ReviewSerializer,
-    TitleSerializer,
-    TitleSerializerGET,
-    TokenSerializer,
-    UserSerializer,
-    UserPatchSerializator,
-)
-from reviews.models import Review, Title, Category, Genre
-from users.models import User
 from api.filters import TitleFilter
+from api.mixins import CreateListDestroyViewSet
+from api.permissions import (IsAdminOrReadOnly, IsAnyRoleOrReadOnly, isAdmin,
+                             isOwner)
+from api.serializers import (AuthSerializer, CategorySerializer,
+                             CommentSerializer, GenreSerializer,
+                             ReviewSerializer, TitleSerializer,
+                             TitleSerializerGET, TokenSerializer,
+                             UserPatchSerializator, UserSerializer)
+from reviews.models import Category, Genre, Review, Title
+from users.models import User
 
 
 class AuthViewSet(viewsets.ViewSet):
+    """Вьюсет для авторизации."""
+
     permission_classes = (permissions.AllowAny,)
 
     @action(detail=False, methods=('post',))
     def token(self, request):
+        """Получение токена по email и коду подтверждения."""
         serializer = TokenSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(
@@ -59,6 +50,7 @@ class AuthViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=('post',))
     def signup(self, request):
+        """Регистрация по email и username."""
         user = None
         if request.data.get('username') and request.data.get('email'):
             user = User.objects.filter(
@@ -87,6 +79,8 @@ class AuthViewSet(viewsets.ViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    """Вьюсет для обьектов модели User."""
+
     queryset = User.objects.all()
     pagination_class = PageNumberPagination
     filter_backends = (filters.SearchFilter,)
@@ -143,7 +137,6 @@ class TitleViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         """Использует один из сериалайзеров в зависимости от запроса."""
-
         if self.request.method == 'GET':
             return TitleSerializerGET
         return TitleSerializer
@@ -161,10 +154,9 @@ class GenreViewSet(CreateListDestroyViewSet):
 
 class ReviewViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели Review."""
+
     serializer_class = ReviewSerializer
-    permission_classes = (
-        IsAnyRoleOrReadOnly,
-    )
+    permission_classes = (IsAnyRoleOrReadOnly,)
 
     def get_title(self):
         """Возвращает title по pk."""
@@ -182,10 +174,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели Comment."""
+
     serializer_class = CommentSerializer
-    permission_classes = (
-        IsAnyRoleOrReadOnly,
-    )
+    permission_classes = (IsAnyRoleOrReadOnly,)
 
     def get_review(self):
         """Возвращает review по pk."""
