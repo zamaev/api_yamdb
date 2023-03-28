@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from rest_framework.validators import (
-    UniqueTogetherValidator, UniqueValidator
-)
+from rest_framework.exceptions import ValidationError
+from rest_framework.generics import get_object_or_404
+from rest_framework.validators import (UniqueValidator)
 from reviews.models import Comment, Review, Category, Genre, Title
 from users.models import User, ROLE_CHOICES
 
@@ -70,7 +70,7 @@ class TitleSerializerGET(serializers.ModelSerializer):
     genre = GenreSerializer(many=True,)
     category = CategorySerializer()
     rating = serializers.IntegerField(
-        read_only=True,
+        source='reviews__score__avg', read_only=True
     )
 
     class Meta:
@@ -96,8 +96,9 @@ class TitleSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    title = serializers.HiddenField(
-        default=serializers.CreateOnlyDefault(1)
+    title = serializers.SlugRelatedField(
+        slug_field='name',
+        read_only=True,
     )
     author = serializers.SlugRelatedField(
         slug_field='username',
@@ -105,16 +106,22 @@ class ReviewSerializer(serializers.ModelSerializer):
         default=serializers.CurrentUserDefault(),
     )
 
+    def validate(self, data):
+        request = self.context['request']
+        title = get_object_or_404(
+            Title, pk=self.context['view'].kwargs.get('title_id')
+        )
+        if request.method == 'POST':
+            if (Review.objects.filter(title=title, author=request.user)
+                    .exists()):
+                raise ValidationError(
+                    'Вы уже оставляли отзыв на это произведение'
+                )
+        return data
+
     class Meta:
         model = Review
         fields = ('id', 'author', 'title', 'text', 'score', 'pub_date')
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Review.objects.all(),
-                fields=('title', 'author'),
-                message='Вы уже оставляли отзыв на это произведение'
-            )
-        ]
 
 
 class CommentSerializer(serializers.ModelSerializer):
