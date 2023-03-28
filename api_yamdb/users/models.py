@@ -48,6 +48,7 @@ class User(AbstractUser):
     )
 
     class Meta:
+        ordering = ('username',)
         constraints = (
             models.UniqueConstraint(
                 fields=('email',),
