@@ -16,6 +16,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
@@ -30,6 +31,7 @@ class Genre(models.Model):
     class Meta:
         verbose_name = 'Genre'
         verbose_name_plural = 'Genres'
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
@@ -52,6 +54,7 @@ class GenreTitle(models.Model):
     class Meta:
         verbose_name = 'GenreTitle'
         verbose_name_plural = 'GenreTitles'
+        ordering = ('id',)
 
     def __str__(self):
         return f'{self.genre} {self.title}'
@@ -84,6 +87,7 @@ class Title(models.Model):
     class Meta:
         verbose_name = 'Title'
         verbose_name_plural = 'Titles'
+        ordering = ('name',)
 
     def __str__(self):
         return self.name

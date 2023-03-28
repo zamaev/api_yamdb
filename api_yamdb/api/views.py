@@ -1,6 +1,7 @@
 import random
 
 from django.db.models import Avg
+from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import filters, permissions, status, viewsets
 from rest_framework.decorators import action
@@ -30,6 +31,7 @@ from api.serializers import (
 )
 from reviews.models import Review, Title, Category, Genre
 from users.models import User
+from api.filters import TitleFilter
 
 
 class AuthViewSet(viewsets.ViewSet):
@@ -127,13 +129,17 @@ class CategoryViewSet(CreateListDestroyViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (IsAdminOrReadOnly,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
 
 
 class TitleViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели Title."""
 
     permission_classes = (IsAdminOrReadOnly,)
-    queryset = Title.objects.annotate(Avg('reviews__score'))
+    queryset = Title.objects.annotate(Avg('reviews__score')).order_by('name')
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = TitleFilter
 
     def get_serializer_class(self):
         """Использует один из сериалайзеров в зависимости от запроса."""
@@ -149,6 +155,8 @@ class GenreViewSet(CreateListDestroyViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = (IsAdminOrReadOnly,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
