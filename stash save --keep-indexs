@@ -1,0 +1,486 @@
+[33mcommit 3866b860b1cf0041640f1eed98c13b51f5f5deda[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mbugfix/test-reviews-comments[m[33m)[m
+Merge: a53885d 67d7b83
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Mon Mar 27 23:38:37 2023 +0300
+
+    Merge pull request #20 from zamaev/fix/test_user
+    
+    fix user viewsest
+
+[33mcommit 67d7b8326faeb82708338e57619369e8d68d6ae6[m[33m ([m[1;31morigin/fix/tests[m[33m, [m[1;31morigin/fix/test_user[m[33m)[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Mon Mar 27 23:24:46 2023 +0300
+
+    fix user viewsest
+
+[33mcommit a53885dc1cd4fe76d44990afff98d0eff37646b4[m
+Merge: eed866c c69d99b
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Mon Mar 27 23:06:50 2023 +0300
+
+    Merge pull request #19 from zamaev/feature/pagination
+    
+    Feature/pagination
+
+[33mcommit c69d99bb3e96f85c29667e594a90d8f55859fdcb[m[33m ([m[1;31morigin/feature/pagination[m[33m, [m[1;32mfeature/pagination[m[33m)[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Mon Mar 27 22:58:23 2023 +0300
+
+    pagination in settings
+
+[33mcommit fb8fea561ad7df60d3a4a8c243d17ecb6e52a4e0[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Mon Mar 27 22:57:36 2023 +0300
+
+    pagination in settings  restframework
+
+[33mcommit eed866c73a5ea7fbc88a6ba2636e1d2f6c51b3f3[m
+Merge: 12ff135 2e1f90e
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Mon Mar 27 22:22:13 2023 +0300
+
+    Merge pull request #18 from zamaev/fix/test_permissions
+    
+    Fix/test permissions
+
+[33mcommit 2e1f90e933180c6aabe77cf94a0b7495e2f6d104[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Mon Mar 27 22:21:44 2023 +0300
+
+    fix owner permission
+
+[33mcommit 0f062e8ea881c56d22e00e9b87be86388e810d5f[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Mon Mar 27 21:57:18 2023 +0300
+
+    refact syle
+
+[33mcommit 036581d6cbb711af34e77b1cc0bef7a9312504a4[m
+Merge: a87fb26 12ff135
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Mon Mar 27 21:56:27 2023 +0300
+
+    Merge branch 'develop' into fix/tests
+
+[33mcommit a87fb26844adc19cd16b50b2f2dcb5598dbf5c8d[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Mon Mar 27 21:56:20 2023 +0300
+
+    refact: style before merge
+
+[33mcommit e896e1ca350d6f185dc60afdaa903945bf41e8bb[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Mon Mar 27 21:55:12 2023 +0300
+
+    fix permissions
+
+[33mcommit 12ff135d7271993ab6bd1b2b81600d6585a9cc68[m
+Merge: dbe71c3 e424b4e
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Mon Mar 27 21:48:49 2023 +0300
+
+    Merge pull request #17 from zamaev/feature/title-reviews-fields-update
+    
+    fields added to serializers title, review
+
+[33mcommit e424b4eb34598e25450ceedcdce44795311d677e[m
+Merge: 5d93de2 dbe71c3
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Mon Mar 27 21:48:15 2023 +0300
+
+    Merge branch 'develop' into feature/title-reviews-fields-update
+
+[33mcommit 5d93de25faeb4d2c031ce8ef80793de13bd166be[m[33m ([m[1;31morigin/feature/title-reviews-fields-update[m[33m, [m[1;32mfeature/title-reviews-fields-update[m[33m)[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Mon Mar 27 21:38:49 2023 +0300
+
+    migrations deleted
+
+[33mcommit dbe71c3f2b105ebb4c8902945aa08fb81dc0604e[m
+Author: Marseille <marsel.rafisovich@mail.ru>
+Date:   Mon Mar 27 12:12:57 2023 +0300
+
+    permissions added
+
+[33mcommit 22f31fea1c8f52694e5446a1a3737ed16e9e67d1[m
+Author: honour4life <117070018+honour4life@users.noreply.github.com>
+Date:   Mon Mar 27 11:16:45 2023 +0300
+
+    Update README.md
+
+[33mcommit e3fd03c147a2a5946733a04429a0796a1b2b3033[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Mon Mar 27 02:06:33 2023 +0300
+
+    fields added to seriralizers title, review
+
+[33mcommit 9a32fadfea2b3d81ffddd5894479f5ce5209a0a0[m
+Merge: 6f7f6d6 7175674
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Mon Mar 27 01:21:54 2023 +0300
+
+    Merge pull request #16 from zamaev/fix/tests_reg
+    
+    Fix/tests reg
+
+[33mcommit 717567467f0c9ab2851c7266e53f546fd822449e[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Mon Mar 27 01:12:12 2023 +0300
+
+    fix: fix model
+
+[33mcommit 8c53c6e1cbe74bf67fec1d61081dd18f3eff79c0[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Mon Mar 27 01:06:42 2023 +0300
+
+    fix: registration test
+
+[33mcommit 6f7f6d60ecbd4423c1ca162f9c4560efc33342eb[m
+Merge: 5ff6a63 545a55a
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Mon Mar 27 00:41:49 2023 +0300
+
+    Merge pull request #14 from zamaev/refact/style
+    
+    add readme
+
+[33mcommit 545a55a3dad2bc991099ac447aa59774714b4dfa[m[33m ([m[1;31morigin/refact/style[m[33m)[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 22:32:59 2023 +0300
+
+    remove user model from admin
+
+[33mcommit bc5be6c789dbf28a83e143c410ae6b4dec1db92c[m
+Merge: b8d0c56 5ff6a63
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 22:29:34 2023 +0300
+
+    Merge branch 'develop' into refact/style
+
+[33mcommit b8d0c5680075b924d28185c21d9741d2712366ba[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 22:28:04 2023 +0300
+
+    add readme
+
+[33mcommit 5ff6a6399f3e8e07abebb80af374e0153e4a63b4[m
+Merge: 6a9d09c 3a0dbbd
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sun Mar 26 21:51:29 2023 +0300
+
+    Merge pull request #13 from zamaev/feat/permissions
+    
+    Feat/permissions
+
+[33mcommit 6a9d09c3f52638f36b891d0b04681c63bf4bb982[m
+Merge: 5f304e2 7e746ef
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sun Mar 26 21:10:33 2023 +0300
+
+    Merge pull request #11 from zamaev/feature/title-ratings
+    
+    field rating added to title in models, serializers, views
+
+[33mcommit 5f304e27fe978133c634074d42de0211947b1512[m
+Merge: 2bae00d 2ac6ce4
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sun Mar 26 20:17:51 2023 +0300
+
+    Merge pull request #12 from zamaev/feature/reviews-admin-models
+    
+    models added to reviews admin, api urls corrections
+
+[33mcommit 3a0dbbde5305299fd81f512444941a8a984140c8[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 20:16:56 2023 +0300
+
+    feat: more permissions
+
+[33mcommit 4acef9abb948c72daf3ac3dba26b674fd80df15c[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 20:07:19 2023 +0300
+
+    refact: after merge
+
+[33mcommit b567ff72a1df2e340c164fa7236c2290bf5f9a83[m
+Merge: 0ddfdc1 2bae00d
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 20:06:15 2023 +0300
+
+    Merge branch 'develop' into feat/permissions
+
+[33mcommit 0ddfdc109ff464fd8dba21f7b009099894681891[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 19:57:12 2023 +0300
+
+    feat: base permissions
+
+[33mcommit 2ac6ce44e1e66d0a8f0dfdc1e85d55ebdae70d24[m[33m ([m[1;31morigin/feature/reviews-admin-models[m[33m, [m[1;32mfeature/reviews-admin-models[m[33m)[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Sun Mar 26 19:21:51 2023 +0300
+
+    models added to reviews admin, api urls corrections
+
+[33mcommit 7e746ef6b28e2021de7fa8f83999461404324c5c[m[33m ([m[1;31morigin/feature/title-ratings[m[33m, [m[1;32mfeature/title-ratings[m[33m)[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Sun Mar 26 19:04:44 2023 +0300
+
+    field rating added to title in models, serializers, views
+
+[33mcommit 2bae00d572df259c35b914bb63234c07393c783a[m
+Merge: 2a1fdad b024a54
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sun Mar 26 18:17:44 2023 +0300
+
+    Merge pull request #8 from zamaev/feat/user
+    
+    Feat/user
+
+[33mcommit b024a54f8d774ba3b1184f1c4f4015297750534a[m
+Merge: 984a6a8 2a1fdad
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sun Mar 26 18:16:56 2023 +0300
+
+    Merge branch 'develop' into feat/user
+
+[33mcommit 984a6a818569e3614d0394d5575267603225e2f8[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 18:07:54 2023 +0300
+
+    refact: serializer error messages
+
+[33mcommit 2a1fdad1d6875c9211bbe2917820c9af81c9ac17[m
+Merge: 2762894 8843fbc
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sun Mar 26 17:40:19 2023 +0300
+
+    Merge pull request #9 from zamaev/feature/api-urls-reviews-comments
+    
+    api_urls modified for reviews_comments
+
+[33mcommit 8843fbcdc367c01cb7a64a103957c55a453cbf65[m
+Merge: 1bdcabf 2762894
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sun Mar 26 17:39:28 2023 +0300
+
+    Merge branch 'develop' into feature/api-urls-reviews-comments
+
+[33mcommit 27628947e26903dd7b81d386ed22fa67910226e8[m
+Merge: 9d46848 956d3a5
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sun Mar 26 17:37:37 2023 +0300
+
+    Merge pull request #10 from zamaev/feature/urls-models-views-titles
+    
+    Corrected and polished
+
+[33mcommit 956d3a50ebf3d4cea3b8f662a82ea70fa212bb5b[m
+Author: Marseille <marsel.rafisovich@mail.ru>
+Date:   Sun Mar 26 17:34:54 2023 +0300
+
+    corrected urls.py
+
+[33mcommit 7e53aeb25b8c2b75eed12327e6f526694038075d[m[33m ([m[1;31morigin/feat/permissions[m[33m)[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 17:29:11 2023 +0300
+
+    refact: change serializer
+
+[33mcommit f529aa4d5b74440cdb6794f5bec7abac7b9a3a8e[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 17:17:06 2023 +0300
+
+    refact: correct User model
+
+[33mcommit 30e1c9843cfd56b9a6996119a4b53bd84d4a3b8e[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 17:11:54 2023 +0300
+
+    refact: send email
+
+[33mcommit 2126e60839039be73c31a509af82bdc3148902fa[m
+Author: Marseille <marsel.rafisovich@mail.ru>
+Date:   Sun Mar 26 16:14:35 2023 +0300
+
+    corrected
+
+[33mcommit 743dea0cd61f992fe30f95e92b2660a7e4135598[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sun Mar 26 16:04:04 2023 +0300
+
+    add model username validator
+
+[33mcommit 9d468484b599d21869a88a1fb9ae609573c9728d[m
+Merge: 763af2b f579db6
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sun Mar 26 14:58:27 2023 +0300
+
+    Merge pull request #6 from zamaev/feature/views-reviews-comments
+    
+    viewsets for comments and reviews
+
+[33mcommit 1bdcabf0fd2182abc922874746ca6c113f4fcbf8[m[33m ([m[1;31morigin/feature/api-urls-reviews-comments[m[33m, [m[1;32mfeature/api-urls-reviews-comments[m[33m)[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Sat Mar 25 22:42:47 2023 +0300
+
+    api_urls modified for reviews_comments
+
+[33mcommit f579db69221395961e744dd3c318b68a65005c59[m[33m ([m[1;31morigin/feature/views-reviews-comments[m[33m, [m[1;32mfeature/views-reviews-comments[m[33m)[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Sat Mar 25 17:41:32 2023 +0300
+
+    get_bject in views
+
+[33mcommit 7fa2338d8063c286a29455797f4dd827b0e65af7[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Sat Mar 25 17:28:05 2023 +0300
+
+    object to get_object in views
+
+[33mcommit 00db77e5e801129ec60e43263f1693c3af90300d[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Sat Mar 25 17:12:32 2023 +0300
+
+    in views django.shortcuts changed for drf generics
+
+[33mcommit b7f77e838f6a2d4aab7606dbe939d4a97f72ea46[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sat Mar 25 17:12:05 2023 +0300
+
+    feat: add handler for username "me"
+
+[33mcommit 52d9b580fcb9911353b4593948b3412b93c6fedc[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Sat Mar 25 17:11:32 2023 +0300
+
+    refact: set role field is required
+
+[33mcommit aa28598d5eca3feaab23edd94767f9b99a75ce60[m
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Sat Mar 25 12:04:26 2023 +0000
+
+    add user's viewset and serializer
+
+[33mcommit 6fe2ef0546a8f77c4298c5612ad46ab7cb544f02[m
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Fri Mar 24 08:28:10 2023 +0000
+
+    refact: correct status, style
+
+[33mcommit b09075ab65c806c6dd19afb8ba0228af2b51fcde[m
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Fri Mar 24 07:44:42 2023 +0000
+
+    refactor: style
+
+[33mcommit d4790b6e3c4d8a27f24dc247e18412e46cad9c58[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Fri Mar 24 01:46:16 2023 +0300
+
+    viewsets for comments and reviews
+
+[33mcommit 00685e55f67767656efeb2bb8ff4aa93d7ae4bdf[m[33m ([m[1;31morigin/feat/user[m[33m)[m
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Thu Mar 23 19:59:41 2023 +0000
+
+    add user model, serializer, viewset
+
+[33mcommit 7a6585b3fab78325c444377d4570f0e9add48617[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Thu Mar 23 14:35:24 2023 +0300
+
+    serialrizers review/comments modified fields scaling
+
+[33mcommit 1a7613ad6f4d2946894296dd667c3cfb73a02ef3[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Thu Mar 23 00:33:34 2023 +0300
+
+    serializers.py added to api folder, serializers for comments and reviews created
+
+[33mcommit 5fdd9e8157cfa9d1a9c045d843dadbe1c6842eff[m
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Thu Mar 23 12:28:04 2023 +0000
+
+    add rest_framework app and set app_name in urls.py
+
+[33mcommit 763af2b8eab518f30cb4166bff89f5f392653081[m
+Merge: 6f5715e 28b6f49
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Thu Mar 23 15:32:14 2023 +0300
+
+    Merge pull request #4 from zamaev/feature/serializer-reviews-comments
+    
+    serializers.py added to api folder, serializers for comments and revi…
+
+[33mcommit 6f5715e9c601da1cbebb62f6715decf0c80e34f6[m
+Merge: 1d99bb9 6eddef7
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Thu Mar 23 15:29:22 2023 +0300
+
+    Merge pull request #5 from zamaev/refact/rest_and_appname
+    
+    add rest_framework app and set app_name in urls.py
+
+[33mcommit 6eddef7d164707c3c4107dfbb2f21bde6a7dfdf5[m
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Thu Mar 23 12:28:04 2023 +0000
+
+    add rest_framework app and set app_name in urls.py
+
+[33mcommit e62310757af76224b437e1284328a3ec6291baa6[m
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Thu Mar 23 12:00:26 2023 +0000
+
+    created users app
+
+[33mcommit 28b6f490f559f1b4b3178773a2e1320bf741ecd5[m[33m ([m[1;31morigin/feature/serializer-reviews-comments[m[33m, [m[1;32mfeature/serializer-reviews-comments[m[33m)[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Thu Mar 23 14:35:24 2023 +0300
+
+    serialrizers review/comments modified fields scaling
+
+[33mcommit 1ab544761f418ca868b8d894bcd944d7c3f751d0[m
+Author: Alexey Potanin <avpotanin@gmail.com>
+Date:   Thu Mar 23 00:33:34 2023 +0300
+
+    serializers.py added to api folder, serializers for comments and reviews created
+
+[33mcommit 1d99bb992b5bfca28f0f03bc39bcf6445bfb33b0[m
+Merge: 337bb53 29256e8
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Wed Mar 22 22:41:11 2023 +0300
+
+    Merge pull request #3 from zamaev/feat/plugs
+    
+    remove tests file from review, add plug models
+
+[33mcommit 29256e8f2b036a74938ba0105b58851414a10ee9[m
+Author: Aydrus Zamaev <aydrus.zamaev@gmail.com>
+Date:   Wed Mar 22 22:35:10 2023 +0300
+
+    remove tests file from review, add plug models
+
+[33mcommit 337bb53629a3c211adb6a8c2d6902356aa4466ec[m
+Merge: f162e91 b54d5c3
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Wed Mar 22 22:14:38 2023 +0300
+
+    Merge pull request #2 from zamaev/feature/reviews-comments
+    
+    reviews folder added, models review and comments created
+
+[33mcommit b54d5c3a22312ea5474a317a7d1e3e602efe5192[m
+Merge: 4abc679 f162e91
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Wed Mar 22 22:11:47 2023 +0300
+
+    Merge branch 'develop' into feature/reviews-comments
+
+[33mcommit f162e910e9406f4560d3cd6d0292b70ecc3cdfd3[m
+Merge: 2ac5753 93b4539
+Author: Aydrus Zamaev <64811425+zamaev@users.noreply.github.com>
+Date:   Wed Mar 22 20:45:46 2023 +0300
+
+    Merge pull request #1 from zamaev/refactor/preparation
+    
+    create apps, initial setup
