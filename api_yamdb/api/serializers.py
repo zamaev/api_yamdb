@@ -17,7 +17,7 @@ class AuthSerializer(serializers.Serializer):
     username = serializers.RegexField(
         r'^[\w.@+-]+$',
         max_length=150,
-        required=True
+        required=True,
     )
 
     def validate_username(self, value):
