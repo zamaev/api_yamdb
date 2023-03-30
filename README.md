@@ -29,10 +29,40 @@ pip install -r requirements.txt
 ```bash
 python3 manage.py migrate
 ```
+Добавление тестовых данных (импорт из фикстур)
+```
+python manage.py csvfullfillment
+```
 Запустить проект:
 ```bash
 python3 manage.py runserver
 ```
+
+## Примеры запросов
+### Регистрация 
+Отправляет на почту код подтверждения для получения токена.
+```
+POST /api/v1/auth/signup/
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "username": "user"
+}
+```
+### Получение токена
+```
+POST /api/v1/auth/token/
+Content-Type: application/json
+
+{
+  "username": "user",
+  "confirmation_code": "blwe40-caa91ba6bc59d8a5bc3bded3b4c56972"
+}
+```
+
+## Документация
+Полный список эндпоинтов можно посмотреть запустив сайт и перейдя по ссылке `/redoc/`
 
 ## Авторы
 - [Айдрус](https://github.com/zamaev), [Алексей](https://github.com/potashka), [Марсель](https://github.com/honour4life)
