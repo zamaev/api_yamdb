@@ -12,21 +12,25 @@ class TokenSerializer(serializers.Serializer):
     confirmation_code = serializers.CharField(required=True)
 
 
-class AuthSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
-        required=True,
-        max_length=254,
-        validators=(
-            UniqueValidator(
-                queryset=User.objects.all(),
-                message='A user with that email already exists.'
-            ),
-        )
+class AuthSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=254, required=True)
+    username = serializers.RegexField(
+        r'^[\w.@+-]+$',
+        max_length=150,
+        required=True
     )
 
-    class Meta:
-        model = User
-        fields = ('email', 'username')
+    def validate_username(self, value):
+        if value.lower() == 'me':
+            raise ValidationError('Username cannot be "me"')
+        return value
+
+    def validate(self, data):
+        if (User.objects.filter(
+                username=data.get('username')).exists()
+                ^ User.objects.filter(email=data.get('email')).exists()):
+            raise ValidationError('Username or email is used.')
+        return data
 
 
 class UserSerializer(serializers.ModelSerializer):

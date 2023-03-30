@@ -29,25 +29,9 @@ class AuthViewSet(viewsets.ViewSet):
     @action(detail=False, methods=('POST',))
     def signup(self, request):
         """Регистрация по email и username."""
-        user = None
-        if request.data.get('username') and request.data.get('email'):
-            user = User.objects.filter(
-                username=request.data.get('username'),
-                email=request.data.get('email'),
-            ).first()
-        serializer = AuthSerializer(user, data=request.data)
-        if not serializer.is_valid():
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        if not user:
-            user = serializer.save()
-
-        # serializer = AuthSerializer(data=request.data)
-        # serializer.is_valid(raise_exception=True)
-        # user = User.objects.get_or_create(**serializer.vadated_data)
-
+        serializer = AuthSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user, _ = User.objects.get_or_create(**serializer.validated_data)
         confirmation_code = default_token_generator.make_token(user)
         user.email_user(
             'Код подтверждения',
@@ -83,12 +67,17 @@ class UserViewSet(viewsets.ModelViewSet):
     """Вьюсет для обьектов модели User."""
 
     queryset = User.objects.all()
+    permission_classes = (IsAdmin,)
     serializer_class = UserSerializer
     pagination_class = PageNumberPagination
     filter_backends = (filters.SearchFilter,)
     search_fields = ('username',)
 
-    @action(detail=False, methods=('GET', 'PATCH'))
+    @action(
+        detail=False,
+        methods=('GET', 'PATCH'),
+        permission_classes=(IsOwner,)
+    )
     def me(self, request, *args, **kwars):
         if request.method == 'GET':
             serializer = UserSerializer(request.user)
@@ -106,11 +95,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_object(self):
         return get_object_or_404(User, username=self.kwargs.get('pk'))
-
-    def get_permissions(self):
-        if self.action == 'me':
-            return (IsOwner(),)
-        return (IsAdmin(),)
 
     def update(self, request, *args, **kwargs):
         if self.action == 'update':

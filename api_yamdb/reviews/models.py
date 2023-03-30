@@ -84,9 +84,9 @@ class Title(models.Model):
         validators=[
             MaxValueValidator(
                 dt.date.today().year,
-                'Максимальный год равен текущему году'
+                'Максимальный год равен текущему году',
             )
-        ],
+        ]
     )
     description = models.TextField(
         verbose_name='Описание',
@@ -141,7 +141,7 @@ class Review(models.Model):
         verbose_name='Рейтинг',
         validators=[
             MinValueValidator(1, 'Минимальная оценка 1'),
-            MaxValueValidator(10, 'Максимальная оценка 10')
+            MaxValueValidator(10, 'Максимальная оценка 10'),
         ],
     )
     pub_date = models.DateTimeField(
