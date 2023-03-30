@@ -8,7 +8,7 @@ app_name = 'api'
 
 router = DefaultRouter()
 router.register(r'auth', AuthViewSet, basename='auth')
-router.register(r'users', UserViewSet)
+router.register(r'users', UserViewSet, basename='users')
 
 router.register(r'categories', CategoryViewSet)
 router.register(r'genres', GenreViewSet)

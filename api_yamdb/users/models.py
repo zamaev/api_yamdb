@@ -1,19 +1,14 @@
-
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.core.exceptions import ValidationError
 from django.db import models
+
+from users.validators import username_is_not_me_validators
 
 ROLE_CHOICES = (
     ('user', 'user'),
     ('moderator', 'moderator'),
     ('admin', 'admin'),
 )
-
-
-def username_is_not_me_validators(username):
-    if username == 'me':
-        raise ValidationError('Username cannot be \'me\'')
 
 
 class User(AbstractUser):
@@ -41,13 +36,10 @@ class User(AbstractUser):
         choices=ROLE_CHOICES,
         default='user',
     )
-    confirmation_code = models.IntegerField(
-        'Код подтверждения',
-        blank=True,
-        null=True,
-    )
 
     class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
         ordering = ('username',)
         constraints = (
             models.UniqueConstraint(
@@ -56,9 +48,21 @@ class User(AbstractUser):
             ),
         )
 
+    @property
+    def is_user(self):
+        return self.role == 'user'
+
+    @property
+    def is_moderator(self):
+        return self.role == 'moderator'
+
+    @property
+    def is_admin(self):
+        return self.role == 'admin'
+
     def save(self, *args, **kwargs):
         if self.is_superuser:
             self.role = 'admin'
-        if self.role == 'admin':
+        if self.is_admin:
             self.is_staff = True
         super().save(*args, **kwargs)

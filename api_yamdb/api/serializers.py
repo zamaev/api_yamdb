@@ -9,7 +9,7 @@ from users.models import ROLE_CHOICES, User
 
 class TokenSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
-    confirmation_code = serializers.IntegerField(required=True)
+    confirmation_code = serializers.CharField(required=True)
 
 
 class AuthSerializer(serializers.ModelSerializer):
@@ -48,7 +48,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'last_name', 'bio', 'role')
 
 
-class UserPatchSerializator(UserSerializer):
+class UserPatchSerializer(UserSerializer):
     role = serializers.ChoiceField(choices=ROLE_CHOICES,
                                    read_only=True)
 
