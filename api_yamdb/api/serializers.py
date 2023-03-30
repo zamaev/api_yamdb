@@ -9,24 +9,28 @@ from users.models import ROLE_CHOICES, User
 
 class TokenSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
-    confirmation_code = serializers.IntegerField(required=True)
+    confirmation_code = serializers.CharField(required=True)
 
 
-class AuthSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
+class AuthSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=254, required=True)
+    username = serializers.RegexField(
+        r'^[\w.@+-]+$',
+        max_length=150,
         required=True,
-        max_length=254,
-        validators=(
-            UniqueValidator(
-                queryset=User.objects.all(),
-                message='A user with that email already exists.'
-            ),
-        )
     )
 
-    class Meta:
-        model = User
-        fields = ('email', 'username')
+    def validate_username(self, value):
+        if value.lower() == 'me':
+            raise ValidationError('Username cannot be "me"')
+        return value
+
+    def validate(self, data):
+        if (User.objects.filter(
+                username=data.get('username')).exists()
+                ^ User.objects.filter(email=data.get('email')).exists()):
+            raise ValidationError('Username or email is used.')
+        return data
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -48,7 +52,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'last_name', 'bio', 'role')
 
 
-class UserPatchSerializator(UserSerializer):
+class UserPatchSerializer(UserSerializer):
     role = serializers.ChoiceField(choices=ROLE_CHOICES,
                                    read_only=True)
 
