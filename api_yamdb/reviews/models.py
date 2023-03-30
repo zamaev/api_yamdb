@@ -66,13 +66,15 @@ class Title(models.Model):
 
     name = models.CharField(verbose_name='Произведение',
                             max_length=256)
-    year = models.IntegerField(verbose_name='Год произведения',
-                               validators=[
-                                MaxValueValidator(
-                                    dt.date.today().year,
-                                    'Максимальный год равен текущему году'
-                                )
-                               ])
+    year = models.IntegerField(
+        verbose_name='Год произведения',
+        validators=[
+            MaxValueValidator(
+                dt.date.today().year,
+                'Максимальный год равен текущему году'
+            )
+        ]
+    )
     description = models.TextField(verbose_name='Описание', blank=True)
     category = models.ForeignKey(
         Category,
@@ -85,11 +87,6 @@ class Title(models.Model):
     genre = models.ManyToManyField(
         Genre,
         through=GenreTitle
-    )
-    rating = models.IntegerField(
-        verbose_name='Рейтинг',
-        null=True,
-        default=None
     )
 
     class Meta:
