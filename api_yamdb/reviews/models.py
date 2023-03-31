@@ -3,7 +3,7 @@ from django.db import models
 
 from users.models import User
 
-from .validator import title_year_validator
+from reviews.validator import title_year_validator
 
 
 class Category(models.Model):
