@@ -4,14 +4,17 @@ from django.db import models
 
 from users.validators import username_is_not_me_validators
 
-ROLE_CHOICES = (
-    ('user', 'user'),
-    ('moderator', 'moderator'),
-    ('admin', 'admin'),
-)
-
 
 class User(AbstractUser):
+    USER = 'user'
+    MODERATOR = 'moderator'
+    ADMIN = 'admin'
+    ROLE_CHOICES = (
+        (USER, 'Пользователь'),
+        (MODERATOR, 'Модератор'),
+        (ADMIN, 'Администратор'),
+    )
+
     username = models.CharField(
         'username',
         max_length=150,
@@ -32,9 +35,9 @@ class User(AbstractUser):
     )
     role = models.CharField(
         'Роль',
-        max_length=30,
+        max_length=15,
         choices=ROLE_CHOICES,
-        default='user',
+        default=USER,
     )
 
     class Meta:
@@ -50,19 +53,24 @@ class User(AbstractUser):
 
     @property
     def is_user(self):
-        return self.role == 'user'
+        return (not self.is_admin
+                and not self.is_moderator
+                and self.role == self.USER)
 
     @property
     def is_moderator(self):
-        return self.role == 'moderator'
+        return (not self.is_admin
+                and (self.is_staff
+                     or self.role == self.MODERATOR))
 
     @property
     def is_admin(self):
-        return self.role == 'admin'
+        return (self.is_superuser
+                or self.role == self.ADMIN)
 
     def save(self, *args, **kwargs):
         if self.is_superuser:
-            self.role = 'admin'
-        if self.is_admin:
+            self.role = self.ADMIN
+        if self.is_admin or self.is_moderator:
             self.is_staff = True
         super().save(*args, **kwargs)

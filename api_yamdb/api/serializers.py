@@ -4,7 +4,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.validators import UniqueValidator
 
 from reviews.models import Category, Comment, Genre, Review, Title
-from users.models import ROLE_CHOICES, User
+from users.models import User
+from users.validators import username_is_not_me_validators
 
 
 class TokenSerializer(serializers.Serializer):
@@ -21,8 +22,7 @@ class AuthSerializer(serializers.Serializer):
     )
 
     def validate_username(self, value):
-        if value.lower() == 'me':
-            raise ValidationError('Username cannot be "me"')
+        username_is_not_me_validators(value)
         return value
 
     def validate(self, data):
@@ -44,7 +44,7 @@ class UserSerializer(serializers.ModelSerializer):
             ),
         ),
     )
-    role = serializers.ChoiceField(choices=ROLE_CHOICES, required=False)
+    role = serializers.ChoiceField(choices=User.ROLE_CHOICES, required=False)
 
     class Meta:
         model = User
@@ -53,7 +53,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserPatchSerializer(UserSerializer):
-    role = serializers.ChoiceField(choices=ROLE_CHOICES,
+    role = serializers.ChoiceField(choices=User.ROLE_CHOICES,
                                    read_only=True)
 
 
